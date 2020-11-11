@@ -14,5 +14,6 @@ def solution(food_times, k):
             return -1
 
         smallest = food[0][0]
+
     food = sorted(food, key=lambda x:x[1])
     return food[k % len(food)][1]
