@@ -1,3 +1,5 @@
+### 기둥과 보 설치
+
 def impossible(result):
     COL, ROW = 0, 1
     for x, y, a in result:
