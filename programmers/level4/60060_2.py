@@ -35,15 +35,3 @@ def solution(words, queries):
         answer.append(res)
 
     return answer
-
-
-
-
-
-
-
-#############################################################################################################
-a = solution(["frodo", "front", "frost", "frozen", "frame", "kakao"],
-             ["fro??", "????o", "fr???", "fro???", "pro?"])
-print(a == [3, 2, 4, 1, 0])
-print(a)
