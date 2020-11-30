@@ -1,12 +1,13 @@
+#### 2회독째
 from sys import stdin
-READ = lambda : stdin.readline().strip()
+read = lambda : stdin.readline().strip()
 
-S = READ()
-answer = int(S[0])
-for i in range(1, len(S)):
-    if answer <= 1:
-        answer += int(S[i])
+s = read()
+answer = 0
+for i in s:
+    no = int(i)
+    if no <= 1 or answer <= 1:
+        answer += no
     else:
-        answer *= int(S[i])
-
+        answer *= no
 print(answer)
