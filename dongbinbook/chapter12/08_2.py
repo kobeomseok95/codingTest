@@ -1,17 +1,15 @@
 from sys import stdin
-READ = lambda: stdin.readline().strip()
+read = lambda : stdin.readline().strip()
 
-data = READ()
-result = []
-value = 0
+s = list(map(str, read()))
+s.sort()
 
-for x in data:
-    if x.isalpha():
-        result.append(x)
+nums, string = 0, ""
+for i in range(len(s)):
+    if s[i].isdigit():
+        nums += int(s[i])
     else:
-        value += int(x)
+        string += s[i]
 
-result.sort()
-if value != 0:
-    result.append(str(value))
-print(''.join(result))
+string += str(nums)
+print(string)
