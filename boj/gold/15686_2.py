@@ -12,14 +12,12 @@ for i in range(n):
         elif maps[i][j] == 1:
             house.append((i, j))
 
-answer = int(1e9)
-for chicken in combinations(chickens, m):
-    total = 0
+min_distance = int(1e9)
+for c in combinations(chickens, m):
+    sum_distance = 0
     for h in house:
-        house_chicken = int(1e9)
-        for c in chicken:
-            house_chicken = min(abs(h[0] - c[0]) + abs(h[1] - c[1]), house_chicken)
-        total += house_chicken
-    answer = min(answer, total)
+        sum_distance += min([abs(h[0]-cy) + abs(h[1] - cx) for cy, cx in c])
 
-print(answer)
+    min_distance = min(min_distance, sum_distance)
+
+print(min_distance)
