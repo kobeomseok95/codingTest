@@ -42,38 +42,3 @@ def solution(p):
         return tmp_v + tmp_u
 
     return answer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##############################################################################
-a = solution("(()())()")
-print(a)
-print(a == "(()())()")
-b = solution(")(")
-print(b)
-print(b == "()")
-c = solution("()))((()")
-print(c)
-print(c == "()(())()")
