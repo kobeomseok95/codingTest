@@ -54,25 +54,3 @@ for save_zone in combinations(safety, 3):
     answer = max(answer, safe)
 
 print(answer)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
