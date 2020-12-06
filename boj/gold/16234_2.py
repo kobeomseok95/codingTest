@@ -1,66 +1,50 @@
 from collections import deque
 from sys import stdin
-READ = lambda : stdin.readline().strip()
-nm = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+read = lambda : stdin.readline().strip()
 
-def bfs(x, y):
-    t = [(x, y)]
-    tq = deque([(x, y)])
-    s = m[x][y]
-    v[x][y] = 1
-    while tq:
-        x, y = tq.popleft()
-        for _x, _y in nm:
-            tx = x + _x
-            ty = y + _y
-            if 0 <= tx < n and 0 <= ty < n and not v[tx][ty]:
-                diff = abs(m[tx][ty] - m[x][y])
-                if l <= diff <= r:
-                    v[tx][ty] = 1
-                    s += m[tx][ty]
-                    tq.append((tx,ty))
-                    t.append((tx, ty))
-    if (size := len(t)) > 1:
-        num = s // size
-        for i in range(size):
-            x, y = t[i]
-            m[x][y] = num
-            q.append((x, y))
-        return 0
-    else:
-        return 1
+n, l, r = map(int, read().split())
+graph = []
+dy, dx = [-1, 1, 0, 0], [0, 0, 1, -1]
+for _ in range(n):
+    graph.append(list(map(int, read().split())))
 
 
-def c(x, y):    # borderline open 여부
-    for _x, _y in nm:
-        tx = x + _x
-        ty = y + _y
-        if 0 <= tx < n and 0 <= ty < n:
-            diff = abs(m[tx][ty] - m[x][y])
-            if l <= diff <= r:
-                return 0
-    return 1
+def process(y, x, index):
+    union[y][x] = index
+    summary = graph[y][x]
+    count = 1
+    united = [(y, x)]
+    q = deque()
+    q.append((y, x))
+
+    while q:
+        uy, ux = q.popleft()
+        for i in range(4):
+            ny, nx = uy + dy[i], ux + dx[i]
+            if 0 <= ny < n and 0 <= nx < n and union[ny][nx] == -1:
+                if l <= abs(graph[ny][nx] - graph[uy][ux]) <= r:
+                    union[ny][nx] = index
+                    summary += graph[ny][nx]
+                    count += 1
+                    united.append((ny, nx))
+                    q.append((ny, nx))
+
+    for i, j in united:
+        graph[i][j] = summary // count
 
 
-n, l, r = map(int, READ().split())
-m = [[] for _ in range(n)]
-cnt = 0
-q = deque()
-for i in range(n):
-    m[i] = list(map(int, READ().split()))
-    for j in range(n):
-        q.append((i, j))
-f = 0
-while not f:
-    v = [[0] * n for _ in range(n)]
-    f = 1
-    sz = len(q)
-    for _ in range(sz):
-        x, y = q.popleft()
-        if v[x][y] or c(x, y):
-            continue
-        if not bfs(x, y):
-            f = 0
-    if not f:
-        cnt += 1
-print(cnt)
+result = 0
+while True:
+    union = [[-1 for _ in range(n)] for _ in range(n)]
+    index = 0
+    for i in range(n):
+        for j in range(n):
+            if union[i][j] == -1:
+                process(i, j, index)
+                index += 1
+
+    if index == n * n:
+        break
+    result += 1
+
+print(result)
