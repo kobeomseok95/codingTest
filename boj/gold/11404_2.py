@@ -1,40 +1,31 @@
 from sys import stdin
-READ = lambda : stdin.readline().strip()
+read = lambda : stdin.readline().strip()
 INF = int(1e9)
 
-n = int(READ())
-m = int(READ())
+n = int(read())
+m = int(read())
 
-maps = [[INF] * (n + 1) for _ in range(n + 1)]
-for i in range(1, n + 1):
-    for j in range(1, n + 1):
+maps = [[INF for _ in range(n)] for _ in range(n)]
+for _ in range(m):
+    a, b, c = map(int, read().split())
+    maps[a-1][b-1] = min(c, maps[a-1][b-1])
+
+
+for i in range(n):
+    for j in range(n):
         if i == j:
             maps[i][j] = 0
 
-for _ in range(m):
-    a, b, c = map(int, READ().split())
-    maps[a][b] = min(maps[a][b], c)
+for k in range(n):
+    for a in range(n):
+        for b in range(n):
+            if a != b and a != k and k != b:
+                maps[a][b] = min(maps[a][b], maps[a][k] + maps[k][b])
 
-for k in range(1, n + 1):
-    for a in range(1, n + 1):
-        for b in range(1, n + 1):
-            maps[a][b] = min(maps[a][b], maps[a][k] + maps[k][b])
-
-for i in range(1, n + 1):
-    for j in range(1, n + 1):
+for i in range(n):
+    for j in range(n):
         if maps[i][j] >= INF:
             print("0", end=' ')
         else:
             print(maps[i][j], end=' ')
     print()
-
-
-
-
-
-
-
-
-
-
-
