@@ -1,33 +1,31 @@
 from bisect import bisect_left, bisect_right
 
 
-def count_by_range(arr, left_val, right_val):
-    l = bisect_left(arr, left_val)
-    r = bisect_right(arr, right_val)
-
-    return r - l
-
-
 def solution(words, queries):
     answer = []
-
-    sorted_words = [[] for _ in range(10001)]
-    reversed_sorted_words = [[] for _ in range(10001)]
-    for word in words:
-        sorted_words[len(word)].append(word)
-        reversed_sorted_words[len(word)].append(word[::-1])
+    words_length = [[] for _ in range(10001)]
+    reversed_words_length = [[] for _ in range(10001)]
+    for w in words:
+        words_length[len(w)].append(w)
+        reversed_words_length[len(w)].append(w[::-1])
 
     for i in range(10001):
-        sorted_words[i].sort()
-        reversed_sorted_words[i].sort()
+        words_length[i].sort()
+        reversed_words_length[i].sort()
 
-    for query in queries:
-        if query[0] == '?':
-            res = count_by_range(reversed_sorted_words[len(query)], query[::-1].replace('?', 'a'), query[::-1].replace('?', 'z'))
-        else:
-            res = count_by_range(sorted_words[len(query)], query.replace('?', 'a'), query.replace('?', 'z'))
+    for q in queries:
+        if q[0] == '?':
+            words_list = reversed_words_length[len(q)]
+            left = bisect_left(words_list, q[::-1].replace("?", "a"))
+            right = bisect_right(words_list, q[::-1].replace("?", "z"))
+            answer.append(right - left)
 
-        answer.append(res)
+        elif q[0] != '?':
+            words_list = words_length[len(q)]
+            left = bisect_left(words_list, q.replace("?", "a"))
+            right = bisect_right(words_list, q.replace("?", "z"))
+            answer.append(right - left)
+
     return answer
 
 
@@ -40,8 +38,11 @@ def solution(words, queries):
 
 
 
-#############################################################################
+
+
+
+
+######################################################################
 a = solution(["frodo", "front", "frost", "frozen", "frame", "kakao"],
              ["fro??", "????o", "fr???", "fro???", "pro?"])
-print([3, 2, 4, 1, 0] == a)
-print(a)
+print(a, a == [3, 2, 4, 1, 0])
