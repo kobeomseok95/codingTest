@@ -1,3 +1,5 @@
+# 오답코드 입니다.
+
 from sys import stdin
 read = lambda : stdin.readline().strip()
 
