@@ -4,6 +4,7 @@ read = lambda : stdin.readline().strip()
 INF = int(1e9)
 n, m = map(int, read().split())
 maps = [[INF for _ in range(n + 1)] for _ in range(n + 1)]
+
 for i in range(1, n + 1):
     maps[i][i] = 0
 
@@ -16,7 +17,12 @@ for k in range(1, n + 1):
         for b in range(1, n + 1):
             maps[a][b] = min(maps[a][b], maps[a][k] + maps[k][b])
 
-answer = 0
+# for i in range(1, n + 1):
+#     for j in range(1, n + 1):
+#         print(maps[i][j], end = ' ')
+#     print()
+
+result = 0
 for i in range(1, n + 1):
     count = 0
     for j in range(1, n + 1):
@@ -24,6 +30,5 @@ for i in range(1, n + 1):
             count += 1
 
     if count == n:
-        answer += 1
-
-print(answer)
+        result += 1
+print(result)
