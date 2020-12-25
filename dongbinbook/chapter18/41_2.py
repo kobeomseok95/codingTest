@@ -1,3 +1,5 @@
+## 오답
+
 from sys import stdin
 read = lambda : stdin.readline().strip()
 
@@ -36,7 +38,7 @@ for i in range(n):
 
 possible = True
 for i in range(1, n + 1):
-    if parent[i] != 1:
+    if parent[i] != 1:  # 1이 아닐수도있다.
         possible = False
         break
 
