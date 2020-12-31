@@ -15,6 +15,6 @@ for i in range(n - 1, -1, -1):
         dp[i] = max(max_val, price[i] + dp[time[i] + i])
         max_val = dp[i]
     else:
-        max_val = max(dp)
+        dp[i] = max_val
 
 print(dp[0])
