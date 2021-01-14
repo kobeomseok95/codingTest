@@ -61,4 +61,4 @@ def solution(nodeinfo):
 
     answer.append(preorder)
     answer.append(postorder)
-    return answer
+    return answer42893
