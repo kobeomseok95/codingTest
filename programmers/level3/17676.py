@@ -12,7 +12,7 @@ def get_times(lines):
             delay[1] = delay[1][:-1]
         else:
             delay = list(data[2][:-1])
-            delay.append("0")
+            delay += ['0']
 
         end = datetime.datetime.fromisoformat(date)
         start = end - datetime.timedelta(seconds=int(delay[0]), milliseconds=int(delay[1]) - 1)
@@ -25,12 +25,18 @@ def compare(point, target):
     start = point
     end = point + datetime.timedelta(milliseconds=999)
 
-    if start <= target[0] <= end:
+    if target[0] <= start <= target[1]:
         return True
-    if start <= target[1] <= end:
+    if target[0] <= end <= target[1]:
         return True
     if start <= target[0] <= end and start <= target[1] <= end:
         return True
+    # if start <= target[0] <= end:
+    #     return True
+    # if start <= target[1] <= end:
+    #     return True
+    # if start <= target[0] <= end and start <= target[1] <= end:
+    #     return True
 
     return False
 
