@@ -4,26 +4,29 @@ read = lambda: stdin.readline().strip()
 
 def counting(n, L, maps):
     count = 0
-    chk = [[False for _ in range(n)] for _ in range(n)]
-
+    slope = [[False for _ in range(n)] for _ in range(n)]
     for i in range(n):
-        j = 0
         flag = True
+        j = 0
         while j < n - 1:
             if maps[i][j] == maps[i][j + 1]:
                 j += 1
                 continue
+            # 감소의 경우
             elif maps[i][j] - maps[i][j + 1] == 1:
-                if maps[i][j + 1: j + 1 + L].count(maps[i][j + 1]) == L:
-                    chk[i][j + 1: j + 1 + L] = [True] * L
+                # 같은 경사의 숫자 체크
+                if maps[i][j+1 : j+1+L].count(maps[i][j+1]) >= L:
+                    slope[i][j+1 : j+1+L] = [True] * L
                     j += L
                     continue
                 else:
                     flag = False
                     break
+            # 증가의 경우
             elif maps[i][j] - maps[i][j + 1] == -1:
-                if maps[i][j - L + 1: j + 1].count(maps[i][j]) == L and True not in chk[i][j - L + 1: j + 1]:
-                    chk[i][j - L + 1: j + 1] = [True] * L
+                # 경사를 만들기 충분한지, 이전 인덱스를 조절하기에 이전 경사가 설정되어있는지 체크
+                if maps[i][j-L+1 : j+1].count(maps[i][j]) >= L and True not in slope[i][j-L+1 : j+1]:
+                    slope[i][j - L + 1: j + 1] = [True] * L
                     j += 1
                     continue
                 else:
