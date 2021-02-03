@@ -55,30 +55,3 @@ def solution(board, r, c):
             cursors = [pos for d, pos in vs if d == mvn]
         answer = min(answer, dist)
     return answer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    a = solution([[1,0,0,3],
-                  [2,0,0,0],
-                  [0,0,0,2],
-                  [3,0,1,0]], 1, 0)
-    print(a == 14, a)
-    # a = solution([[3,0,0,2],[0,0,1,0],[0,1,0,0],[2,0,0,3]], 0, 1)
-    # print(a == 16, a)
