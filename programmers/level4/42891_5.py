@@ -5,16 +5,17 @@ def solution(food_times, k):
     if sum(food_times) <= k:
         return -1
 
-    length = len(food_times)
     heap = []
+    length = len(food_times)
     for i in range(length):
-        heappush(heap, (food_times[i], i + 1))
+        heappush(heap, [food_times[i], i + 1])
 
-    sum_foods = 0
+    # 이전에 먹은 음식양, 먹은 음식 총량
     previous = 0
-    while ((heap[0][0] - previous) * length) <= k:
+    sumv = 0
+    while (heap[0][0] - previous) * length <= k:
         food = heappop(heap)[0]
-        sum_foods += (food - previous) * length
+        sumv += (food - previous) * length
         k -= (food - previous) * length
         previous = food
         length -= 1
