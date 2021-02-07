@@ -1,4 +1,3 @@
-# 다시 풀어볼것 아직 이해 못했음
 def str_to_int(string):
     return int(string[0:2]) * 3600 + int(string[3:5]) * 60 + int(string[6:8])
 
