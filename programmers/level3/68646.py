@@ -2,8 +2,6 @@
 # for로 [a[i], index] 재정의 : n
 # sort : n * log(n)
 # 2 ~ len(balloon) : n
-
-# heapq를 이용해 풀어보기
 def get_balloon_count(balloon):
     answer = 0
     first = min(balloon[0][1], balloon[1][1])
