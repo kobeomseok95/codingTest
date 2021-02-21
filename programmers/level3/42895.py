@@ -20,7 +20,3 @@ def solution(n, number):
             return i
         case_list.append(case_set)
     return -1
-
-#######
-a = solution(5, 12)
-# a = solution(2, 11)
