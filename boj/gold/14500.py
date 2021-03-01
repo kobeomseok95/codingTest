@@ -2,75 +2,74 @@ from sys import stdin
 read = lambda: stdin.readline().strip()
 
 
-def get_nemo_list(n, m):
-    nemo_list = []
+def get_nemo_scores(n, m, scores):
+    answer = 0
     for i in range(n - 1):
         for j in range(m - 1):
-            nemo_list.append([(i, j), (i, j + 1), (i + 1, j), (i + 1, j + 1)])
-    return nemo_list
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i + 1][j] + scores[i + 1][j + 1])
+    return answer
 
 
-def get_ilja_list(n, m):
-    ilja_list = []
+def get_ilja_scores(n, m, scores):
+    answer = 0
     for i in range(n):
         for j in range(m - 3):
-            ilja_list.append([(i, j), (i, j + 1), (i, j + 2), (i, j + 3)])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i][j + 2] + scores[i][j + 3])
 
     for i in range(n - 3):
         for j in range(m):
-            ilja_list.append([(i, j), (i + 1, j), (i + 2, j), (i + 3, j)])
+            answer = max(answer, scores[i][j] + scores[i + 1][j] + scores[i + 2][j] + scores[i + 3][j])
 
-    return ilja_list
+    return answer
 
 
-def get_thunder_list(n, m):
-    thunder_list = []
+def get_thunder_scores(n, m, scores):
+    answer = 0
     for i in range(n - 2):
         for j in range(m - 1):
-            thunder_list.append([(i, j), (i + 1, j), (i + 1, j + 1), (i + 2, j + 1)])
+            answer = max(answer, scores[i][j] + scores[i + 1][j] + scores[i + 1][j + 1] + scores[i + 2][j + 1])
+            answer = max(answer, scores[i][j + 1] + scores[i + 1][j + 1] + scores[i + 1][j] + scores[i + 2][j])
 
     for i in range(n - 1):
         for j in range(m - 2):
-            thunder_list.append([(i + 1, j), (i + 1, j + 1), (i, j + 1), (i, j + 2)])
+            answer = max(answer, scores[i + 1][j] + scores[i + 1][j + 1] + scores[i][j + 1] + scores[i][j + 2])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i + 1][j + 1] + scores[i + 1][j + 2])
 
-    return thunder_list
+    return answer
 
 
-def get_nieun_list(n, m):
-    nieun_list = []
+def get_nieun_scores(n, m, scores):
+    answer = 0
     for i in range(n - 2):
         for j in range(m - 1):
-            nieun_list.append([(i, j), (i + 1, j), (i + 2, j), (i + 2, j + 1)])
-            nieun_list.append([(i, j), (i, j + 1), (i + 1, j + 1), (i + 2, j + 1)])
+            answer = max(answer, scores[i][j] + scores[i + 1][j] + scores[i + 2][j] + scores[i + 2][j + 1])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i + 1][j + 1] + scores[i + 2][j + 1])
+            answer = max(answer, scores[i + 2][j] + scores[i + 2][j + 1] + scores[i + 1][j + 1] + scores[i][j + 1])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i + 1][j] + scores[i + 2][j])
 
     for i in range(n - 1):
         for j in range(m - 2):
-            nieun_list.append([(i, j), (i + 1, j), (i, j + 1), (i, j + 2)])
-            nieun_list.append([(i + 1, j), (i + 1, j + 1), (i + 1, j + 2), (i, j + 2)])
+            answer = max(answer, scores[i][j] + scores[i + 1][j] + scores[i + 1][j + 1] + scores[i + 1][j + 2])
+            answer = max(answer, scores[i + 1][j] + scores[i + 1][j + 1] + scores[i + 1][j + 2] + scores[i][j + 2])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i][j + 2] + scores[i + 1][j])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i][j + 2] + scores[i + 1][j + 2])
 
-    return nieun_list
+    return answer
 
 
-def get_fuckyou_list(n, m):
-    fuckyou_list = []
+def get_fuckyou_scores(n, m, scores):
+    answer = 0
     for i in range(n - 2):
         for j in range(m - 1):
-            fuckyou_list.append([(i, j), (i + 1, j), (i + 2, j), (i + 1, j + 1)])
-            fuckyou_list.append([(i, j + 1), (i + 1, j), (i + 1, j + 1), (i + 2, j + 1)])
+            answer = max(answer, scores[i][j] + scores[i + 1][j] + scores[i + 2][j] + scores[i + 1][j + 1])
+            answer = max(answer, scores[i][j + 1] + scores[i + 1][j] + scores[i + 1][j + 1] + scores[i + 2][j + 1])
 
     for i in range(n - 1):
         for j in range(m - 2):
-            fuckyou_list.append([(i, j + 1), (i + 1, j), (i + 1, j + 1), (i + 1, j + 2)])
-            fuckyou_list.append([(i, j), (i, j + 1), (i, j + 2), (i + 1, j + 1)])
+            answer = max(answer, scores[i][j + 1] + scores[i + 1][j] + scores[i + 1][j + 1] + scores[i + 1][j + 2])
+            answer = max(answer, scores[i][j] + scores[i][j + 1] + scores[i][j + 2] + scores[i + 1][j + 1])
 
-    return fuckyou_list
-
-
-def get_score(scores, location):
-    score = 0
-    for y, x in location:
-        score += scores[y][x]
-    return score
+    return answer
 
 
 def solve():
@@ -78,18 +77,12 @@ def solve():
     scores = []
     for i in range(n):
         scores.append(list(map(int, read().split())))
-
-    nemo_list = get_nemo_list(n, m)
-    ilja_list = get_ilja_list(n, m)
-    thunder_list = get_thunder_list(n, m)
-    nieun_list = get_nieun_list(n, m)
-    fuckyou_list = get_fuckyou_list(n, m)
-    shape_list = [nemo_list, ilja_list, thunder_list, nieun_list, fuckyou_list]
-    
     answer = 0
-    for shape in shape_list:
-        for location in shape:
-            answer = max(answer, get_score(scores, location))
+    answer = max(answer, get_nemo_scores(n, m, scores))
+    answer = max(answer, get_ilja_scores(n, m, scores))
+    answer = max(answer, get_thunder_scores(n, m, scores))
+    answer = max(answer, get_nieun_scores(n, m, scores))
+    answer = max(answer, get_fuckyou_scores(n, m, scores))
     print(answer)
 
 
