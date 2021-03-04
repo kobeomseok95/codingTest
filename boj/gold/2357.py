@@ -3,48 +3,50 @@ from math import ceil, log2
 read = lambda: stdin.readline().strip()
 
 
-def min_tree_init(arr, min_tree, node, left, right):
+def min_init(arr, min_tree, node, left, right):
     if left == right:
         min_tree[node] = arr[left]
-        return
+        return min_tree[node]
 
     mid = (left + right) // 2
-    min_tree_init(arr, min_tree, node * 2, left, mid)
-    min_tree_init(arr, min_tree, node * 2 + 1, mid + 1, right)
-    min_tree[node] = min(min_tree[node * 2], min_tree[node * 2 + 1])
+    min_tree[node] = min(min_init(arr, min_tree, node * 2, left, mid),
+                         min_init(arr, min_tree, node * 2 + 1, mid + 1, right))
+    return min_tree[node]
     
     
-def max_tree_init(arr, max_tree, node, left, right):
+def max_init(arr, max_tree, node, left, right):
     if left == right:
         max_tree[node] = arr[left]
-        return
+        return max_tree[node]
 
     mid = (left + right) // 2
-    max_tree_init(arr, max_tree, node * 2, left, mid)
-    max_tree_init(arr, max_tree, node * 2 + 1, mid + 1, right)
-    max_tree[node] = max(max_tree[node * 2], max_tree[node * 2 + 1])
+    max_tree[node] = max(max_init(arr, max_tree, node * 2, left, mid),
+                         max_init(arr, max_tree, node * 2 + 1, mid + 1, right))
+    return max_tree[node]
 
 
 def max_find(tree, node, left, right, start, end):
-    if start > right or end < left:
+    if left > end or right < start:
         return 0
 
     if start <= left and right <= end:
         return tree[node]
 
     mid = (left + right) // 2
-    return max(max_find(tree, node, left, mid, start, end), max_find(tree, node, mid + 1, right, start, end))
+    return max(max_find(tree, node * 2, left, mid, start, end),
+               max_find(tree, node * 2 + 1, mid + 1, right, start, end))
 
 
 def min_find(tree, node, left, right, start, end):
-    if start > right or end < left:
+    if left > end or right < start:
         return 1000000001
 
     if start <= left and right <= end:
         return tree[node]
 
     mid = (left + right) // 2
-    return min(min_find(tree, node, left, mid, start, end), min_find(tree, node, mid + 1, right, start, end))
+    return min(min_find(tree, node * 2, left, mid, start, end),
+               min_find(tree, node * 2 + 1, mid + 1, right, start, end))
 
 
 if __name__ == "__main__":
@@ -59,28 +61,8 @@ if __name__ == "__main__":
     size = 1 << (h + 1)
 
     max_tree, min_tree = [0] * size, [0] * size
-    max_tree_init(arr, max_tree, 1, 0, n - 1)
-    min_tree_init(arr, min_tree, 1, 0, n - 1)
+    max_init(arr, max_tree, 1, 0, n - 1)
+    min_init(arr, min_tree, 1, 0, n - 1)
 
     for p1, p2 in pairs:
-        min_val = min_find(min_tree, 1, 0, n - 1, p1, p2)
-        max_val = max_find(max_tree, 1, 0, n - 1, p1, p2)
-        print(min_val, max_val)
-
-"""
-구간 문제! 구간을 나눌때 세그먼트 트리로 어떻게 표현?
-10 1
-75
-30
-100
-38
-50
-51
-52
-20
-81
-5
-3 5
-# 6 9
-# 8 10
-"""
+        print(min_find(min_tree, 1, 0, n - 1, p1, p2), max_find(max_tree, 1, 0, n - 1, p1, p2))
