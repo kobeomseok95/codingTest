@@ -26,8 +26,34 @@ def solution(enter, leave):
             prev_meet[leave[leave_idx]] = False
             leave_idx += 1
 
-
     return answer[1:]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

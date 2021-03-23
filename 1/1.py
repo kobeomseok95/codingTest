@@ -20,8 +20,7 @@ def solution(table, languages, preference):
 
 
 if __name__ == "__main__":
-    a = solution([
-            "SI JAVA JAVASCRIPT SQL PYTHON C#",
+    a = solution(["SI JAVA JAVASCRIPT SQL PYTHON C#",
           "CONTENTS JAVASCRIPT JAVA PYTHON SQL C++",
           "HARDWARE C C++ PYTHON JAVA JAVASCRIPT",
           "PORTAL JAVA JAVASCRIPT PYTHON KOTLIN PHP",
