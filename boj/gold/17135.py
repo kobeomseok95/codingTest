@@ -4,56 +4,64 @@ from copy import deepcopy
 read = lambda: stdin.readline().strip()
 
 
-# 궁수의 row보다 -1한 값부터 0까지 거꾸로 돌면서 궁수가 적을 죽일 수 있는지 체크한다.
-def kill(copy_maps, archer_y, archer_x):
-    for y in range(archer_y - 1, -1, -1):
-        for x in range(m):
-            # 궁수는 적 한명만 죽일 수 있으므로 죽인 다음 바로 True를 리턴한다.
-            if copy_maps[y][x] == 1 and abs(archer_y - y) + abs(archer_x - x) <= d:
-                kill_set.add((y, x))
-                return
+def get_distance(arc_pos, maps, d):
+    possible_shot = []
+    for arc in arc_pos:
+        possible = []
+        for y in range(len(maps)):
+            for x in range(len(maps[0])):
+                if abs(arc[0] - y) + abs(arc[1] - x) <= d:
+                    possible.append((abs(arc[0] - y) + abs(arc[1] - x), y, x))
+        possible_shot.append(possible)
+    return possible_shot
 
 
-def delete_enemies(copy_maps, kill_set):
-    for y, x in kill_set:
-        copy_maps[y][x] = 0
+def get_nearest(arc_shot_position, enemy_position):
+    arc_shot_position.sort(key=lambda x: (x[0], x[2]))
+    for dist, y, x in arc_shot_position:
+        if (y, x) in enemy_position:
+            return y, x
+    return None
+
+
+def go_forward(enemy_position):
+    return set((y + 1, x) for y, x in enemy_position if y + 1 < n)
 
 
 if __name__ == "__main__":
     n, m, d = map(int, read().split())
-    maps = [list(map(int, read().split())) for _ in range(n)]
 
-    # 궁수가 위치할 자리를 조합으로 설정하고 위치마다
-    # 적을 제거하는 최댓값 비교
+    enemy_position = set()
+    for i in range(n):
+        arr = list(map(int, read().split()))
+        for j in range(m):
+            if arr[j] == 1:
+                enemy_position.add((i, j))
+
     answer = 0
-    for archer_positions in map(list, combinations([i for i in range(m)], 3)):
+    maps = [[0 for _ in range(m)] for _ in range(n)]
+    archer_combi = combinations([(n, i) for i in range(m)], 3)
+    # 궁수들이 자리잡은 위치별로 쓰러트릴 수 있는 최대 적 수 계산하기
+    for archer_positions in archer_combi:
         count = 0
-        copy_maps = deepcopy(maps)
+        # 각 궁수들이 쏠 수 있는 위치들
+        copy_enemy = deepcopy(enemy_position)
+        possible_shot_list = get_distance(archer_positions, maps, d)
+        while enemy_position:
+            # 죽은 적들 위치
+            tmp = set()
+            for arc_shot_position in possible_shot_list:
+                # 궁수가 죽일 수 있는 적들 중, 가깝고 왼쪽에 위치한 적 위치 반환
+                shot_pos = get_nearest(arc_shot_position, enemy_position)
+                if shot_pos is not None:
+                    tmp.add(shot_pos)
 
-        # 궁수들은 maps_row 보다 + 1에 위치해 있으므로
-        # n부터 1까지 검사한다.
-        for archer_y in range(n, 0, -1):
-            # 같은 적이 여러 궁수에게 죽을 수 있다를 처리하기 위해
-            # 죽은 적 열 위치를 담을 리스트 생성
-            kill_set = set()
-            for archer_x in archer_positions:
-                kill(copy_maps, archer_y, archer_x)
+            # count 추가, 죽은 적 지워주기, 한칸 이동
+            count += len(tmp)
+            enemy_position -= tmp
+            enemy_position = go_forward(enemy_position)
 
-            count += len(kill_set)
-            delete_enemies(copy_maps, kill_set)
-
+        # 계산 이후 적들의 위치 초기화
+        enemy_position = copy_enemy
         answer = max(answer, count)
     print(answer)
-
-"""
-4 4 3
-0 1 1 0
-0 0 1 1
-1 0 1 0
-1 1 1 0 
-8
-2 7 2
-0 0 1 0 1 0 1
-1 0 1 0 1 0 0
-5
-"""
