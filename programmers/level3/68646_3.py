@@ -15,7 +15,7 @@
 # 테스트 15 〉	통과 (85.00ms, 56.1MB)
 def solution(a):
     answer = 0
-    min_idx = a.index(min(a))
+    min_idx = a.idx(min(a))
     left = a[:min_idx]
     right = reversed(a[min_idx + 1:])
 

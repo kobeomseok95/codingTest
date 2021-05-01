@@ -20,8 +20,8 @@ def move(color, pieces, pieces_map, n, k):
                 continue
 
         if color[ny][nx] == WHITE:
-            left = pieces_map[(y, x)][:pieces_map[(y, x)].index(i)]
-            right = pieces_map[(y, x)][pieces_map[(y, x)].index(i):]
+            left = pieces_map[(y, x)][:pieces_map[(y, x)].idx(i)]
+            right = pieces_map[(y, x)][pieces_map[(y, x)].idx(i):]
             pieces_map[(y, x)] = left
             pieces_map[(ny, nx)].extend(right)
             for r in right:
@@ -30,8 +30,8 @@ def move(color, pieces, pieces_map, n, k):
                 pieces[i][2] = d
 
         elif color[ny][nx] == RED:
-            left = pieces_map[(y, x)][:pieces_map[(y, x)].index(i)]
-            right = pieces_map[(y, x)][pieces_map[(y, x)].index(i):]
+            left = pieces_map[(y, x)][:pieces_map[(y, x)].idx(i)]
+            right = pieces_map[(y, x)][pieces_map[(y, x)].idx(i):]
             pieces_map[(y, x)] = left
             right.reverse()
             pieces_map[(ny, nx)].extend(right)

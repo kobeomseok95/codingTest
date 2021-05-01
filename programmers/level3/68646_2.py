@@ -20,7 +20,7 @@ def solution(a):
     answer = 0
     heap = []
 
-    idx = a.index(min(a))
+    idx = a.idx(min(a))
     left = a[:idx]
     right = reversed(a[idx+1:])
 

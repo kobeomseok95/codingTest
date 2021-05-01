@@ -3,7 +3,7 @@ sys.setrecursionlimit(10 ** 6)
 
 
 def get_preorder(root, nodeinfo, preorder):
-    preorder.append(nodeinfo.index(root.data) + 1)
+    preorder.append(nodeinfo.idx(root.data) + 1)
 
     if root.left:
         get_preorder(root.left, nodeinfo, preorder)
@@ -17,7 +17,7 @@ def get_postorder(root, nodeinfo, postorder):
     if root.right:
         get_postorder(root.right, nodeinfo, postorder)
 
-    postorder.append(nodeinfo.index(root.data) + 1)
+    postorder.append(nodeinfo.idx(root.data) + 1)
 
 
 class Tree:
