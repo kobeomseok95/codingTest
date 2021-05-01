@@ -20,6 +20,7 @@ def findPreorder(leftIn, rightIn, leftPost, rightPost):
     findPreorder(leftIn, leftIn + left - 1, leftPost, rightPost - right - 1)
     findPreorder(leftIn + left + 1, rightIn, rightPost - right, rightPost - 1)
 
+
 if __name__ == "__main__":
     n = int(read())
     inOrder = list(map(int, read().split()))
